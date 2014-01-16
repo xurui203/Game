@@ -1,0 +1,50 @@
+GAME DESIGN DOCUMENT
+@author Xu Rui
+
+The Candy Rain game has the simple objective of catching candy while avoiding contact with undesirable objects.
+The game or level is won after the Candy Meter reaches 100, and is lost if all lives are lost.
+
+On level one, the chipmunk can move left or right on the bottom of the screen to catch candy and avoid bird poop falling from the sky.
+The speed and horizontal location of all falling objects are randomized to attain an unpredictable but even spread on the screen.
+The chipmunk is also customized in proportion to the size of the screen, which can be modified directly from Canvas.
+
+On level two, the chipmunk can move left or right, as well as jump up 3 different levels.
+Lowest level: UP arrow
+Middle level: SPACE key
+Highest level: Q
+
+CHEAT CODES:
+- Press 2 to increase sugar meter
+- Press 3 to increase number of lives
+
+Candy appear in the form of ice cream and milkshakes, moving from left to right at constant velocity. The constant velocity is to minimize overlapping of sprites.
+The position and height at which candy appears is randomized, but the total number of candy and penguin is kept constant. 
+This is done by polling objects from a list, and when they disappear off the screen or is caught by the chipmunk a new one is created and added to the list.
+Penguins behave like penguins, but catching a penguin loses a life. 
+Snowflakes also fall from the sky to add difficulty to the game, as catching a snowflake also decreases a life.
+
+
+Adding new features:
+- Different points for different kinds of candy:
+This can be achieved by setting a private static variable in the candy class, and subsequently setting this value to be the UpdateVal when calling CandyLoop on that object.
+Alternatively, a int variable can be set within Model and set to be the respective UpdateVal, since the CandyLoop method in Model class is designed to maximize customization.
+
+- Two player mode
+Two player mode can be set up either by alternating turns, or if players want to play simultaneously, another Chipmunk class can be created with a different set of Key controls.
+
+- Specify the candy the Chipmunk should try to catch
+This can be done by creating a separate class for each type of candy, then randomly selecting a candy type to display on the screen. In the intersectSprites method, points would only be added
+if the candy that the Chipmunk caught corresponds to the candy type selected. 
+
+- Chipmunk collects stationary objects that appear randomly all over the screen while bypassing moving sprites. 
+Stationary sprites can be created at random (using the poll-and-add method employed in this game) at various positions on the screen. The 4 direction arrow keys can be activated to allow for navigation
+as the Chipmunk moves around to collect stationary objects while avoiding sprites moving across the screen. 
+
+
+Major design choices and assumptions:
+- Keeping the number of candy and poop constant on the screen by using a LinkedList to poll the object everything it disappears and replacing it by adding a new one in the list.
+This is done to prevent cluttering up of the screen, and also ease of control over how difficult the game is meant to be. The tradeoff is that the game becomes more predictable, 
+though this issue of predictability is compensated by randomizing the speed and location of the sprites.
+- Overlapping of sprites in the game can be prevented by setting more intersection conditions, but it can also be argued that overlapping candy with penguins adds challenge to the game.
+- Game is clearly targeted at young kids. 
+
